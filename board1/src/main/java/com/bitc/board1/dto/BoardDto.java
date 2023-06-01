@@ -1,5 +1,5 @@
 package com.bitc.board1.dto;
-
+ 
 public class BoardDto {
     private int boardIdx;
     private String title;
