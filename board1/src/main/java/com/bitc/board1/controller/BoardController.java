@@ -1,6 +1,6 @@
 package com.bitc.board1.controller;
 
-import com.bitc.board1.dto.BoardDto;
+import com.bitc.board1.dto.BoardDto; 
 import com.bitc.board1.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
