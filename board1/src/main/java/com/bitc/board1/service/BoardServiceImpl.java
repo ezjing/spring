@@ -2,7 +2,7 @@ package com.bitc.board1.service;
 
 import com.bitc.board1.dto.BoardDto;
 import com.bitc.board1.mapper.BoardMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
