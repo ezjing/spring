@@ -1,0 +1,49 @@
+plugins {
+    // 해당 프로젝트에 사용하는 프로그래밍 언어 종류
+    id 'java'
+    // 스프링부트 버전
+    id 'org.springframework.boot' version '3.1.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.bitc'
+// 해당 프로젝트 버전
+version = '0.0.1-SNAPSHOT'
+// 해당 프로젝트에 적용된 언어(자바)의 버전
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+// 라이브러리 종속성을 유지하는 서버(메이븐 레파지토리)
+repositories {
+    mavenCentral()
+}
+
+// 종속성 관계에 있는 라이브러리 설정(파일 생성할 때 지정한 것)
+dependencies {
+    // 스프링부트 템플릿엔진 : html 뷰를 표현하기 위한 라이브러리 (JSP는 지원 종료)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // 스프링부터 WEB : Spring MVC 패턴을 사용하기 위한 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // MyBatis : DB ORM, DB를 쉽게 사용하기 위한 라이브러리 (DB 연동하기 전까지 주석처리 해야 오류 안남)
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+    // lombok : DTO 클래스 사용 시 getter/setter 자동 생성
+    compileOnly 'org.projectlombok:lombok'
+    // devtools : 개발 편의성 라이브러리, 서버 자동 재시작 등의 기능
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // mysql driver : 말 그대로 mysql driver (DB 연동하기 전까지 주석처리 해야 오류 안남)
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    // configuration processor : 프로젝트 설정 내용을 자바 클래스로 설정 가ㅡㄴㅇ
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    // lombok
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'  // 얘만 기본적으로 제공됨
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
