@@ -1,6 +1,8 @@
 package com.bitc.board1.controller;
 
 import com.bitc.board1.dto.AreaDto;
+import com.bitc.board1.service.AreaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,13 +14,17 @@ import java.util.List;
 @Controller // 일반적인 컨트롤러는 @ResponseBody 필수
 //@RestController // @ResponseBody가 포함된 컨트롤러
 public class AjaxController {
+
+    @Autowired
+    private AreaService areaService;
+
     // ajax를 사용하지 않는 계산 페이지
     @RequestMapping(value = "/ajax/nonAjaxCalView")
     public String nonAjaxCalView() throws Exception {
         return "ajax/nonAjaxCalView";
     }
 
-    //
+    // ajax를 사용하지 않는 계산 결과 페이지
     @RequestMapping(value = "/ajax/nonAjaxCalResult", method = RequestMethod.GET)
     public ModelAndView nonAjaxCalResult(@RequestParam("num1") int num1, @RequestParam int num2) throws  Exception {
         ModelAndView mv = new ModelAndView("/ajax/nonAjaxCalResult");
@@ -264,14 +270,16 @@ public class AjaxController {
     @ResponseBody   // 없으면 연결은 되지만 데이터가 전송이 안됨.
     @RequestMapping(value = "/ajax/quiz2TProcess", method = RequestMethod.POST)
     public Object quiz2TProcess(@RequestParam("areaName") String areaName) throws Exception {
-//        List<AreaDto> areaList = areaService.getDistrictList(areaName);
-        return null;
+        List<AreaDto> areaList = areaService.getDistrictList(areaName);
+
+        return areaList;
     }
 
     @ResponseBody   // 없으면 연결은 되지만 데이터가 전송이 안됨.
     @RequestMapping(value = "/ajax/quiz2TProcess2", method = RequestMethod.POST)
     public Object quiz2TProcess2(@RequestParam("areaName") String areaName) throws Exception {
-//        List<AreaDto> areaList = areaService.getTownList(areaName);
-        return null;
+        List<AreaDto> areaList = areaService.getTownList(areaName);
+
+        return areaList;
     }
 }

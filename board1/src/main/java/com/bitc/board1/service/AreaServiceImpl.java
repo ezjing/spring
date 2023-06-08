@@ -156,6 +156,6 @@ public class AreaServiceImpl implements AreaService{
                 break;
 
         }
-        return null;
+        return townList;
     }
 }
