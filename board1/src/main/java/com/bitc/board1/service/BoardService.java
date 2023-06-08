@@ -1,6 +1,7 @@
 package com.bitc.board1.service;
 
 import com.bitc.board1.dto.BoardDto;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface BoardService {
     BoardDto selectBoardDetail(int boardIdx) throws Exception;
     
     // 게시판 글 등록 기능
-    void insertBoard(BoardDto board) throws Exception;    // Exception하면 스프링에서 알아서 오류 처리해서 try-catch 안써도 됨
+    void insertBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception;    // Exception하면 스프링에서 알아서 오류 처리해서 try-catch 안써도 됨
     
     // 게시판 글 수정
     void updateBoard(BoardDto board) throws Exception;
