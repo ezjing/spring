@@ -1,9 +1,12 @@
 package com.bitc.board1.controller;
 
-import com.bitc.board1.dto.BoardDto; 
+import com.bitc.board1.dto.BoardDto;
+import com.bitc.board1.dto.BoardFileDto;
 import com.bitc.board1.service.BoardService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.List;
 
 // @Controller : 해당 클래스가 Spring MVC(모델(DB), 뷰(프론트엔드. 화면), 컨트롤러(연산) 서로 완전히 분리한 개발 방식) 패턴에서 Controller 로 동작하는 것을 설정하는 어노테이션
@@ -21,7 +27,7 @@ import java.util.List;
 @RequestMapping("/board")   // 부모주소 지정(자식주소에서 부모주소 생략 가능)
 public class BoardController {
 
-    // @Autowired : 해당 객체를 스프링프레임워크에서 직접 객체를 생성하고 관리하도록 설정하는 어노테이션
+    // @Autowired : 해당 객체를 스프링프레임워크에서 직접 객체를 생성하고 관리하도록 설정하는 어노테이션, 서비스랑 연결시켜 주는것
     // BoardService 타입의 변수 선언
     @Autowired  // @RequiredArgsConstructor 요즘 많이 사용하는 방식(@Autowired 대신)
     private BoardService boardService;
@@ -138,4 +144,20 @@ public class BoardController {
         return "redirect:/board/boardList.do";
     }
 
+    @RequestMapping(value = "/downloadBoardFile", method = RequestMethod.GET)
+    public void downloadBoardFile(@RequestParam("idx") int idx, @RequestParam("boardIdx") int boardIdx, HttpServletResponse resp) throws Exception {
+        BoardFileDto boardFile = boardService.selectBoardFileInfo(idx, boardIdx);
+
+        if (ObjectUtils.isEmpty(boardFile) == false) {
+            String fileName = boardFile.getOriginalFileName();
+            byte[] files = FileUtils.readFileToByteArray(new File(boardFile.getStoredFileName()));
+
+            resp.setContentType("application/octet-stream");
+            resp.setContentLength(files.length);
+            resp.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName, "UTF-8") + "\"");
+            resp.getOutputStream().write(files);
+            resp.getOutputStream().flush();
+            resp.getOutputStream().close();
+        }
+    }
 }
