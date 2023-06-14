@@ -35,8 +35,9 @@ public class FileUtils {
         // 현재 타임존을 기준으로 하여 현재 시간을 가져오기
         ZonedDateTime current = ZonedDateTime.now();
         // 파일 저장 경로 생성, 현재 타임존 기준 시간을 패턴에 맞게 설정하여 출력(images라는 폴더가 경로임)
-        String path = "images/" + current.format(format);
-
+//        String path = "images/" + current.format(format); // 프로젝트의 내부 폴더를 사용할 때 오류가 나는 경우가 있어
+        // 현재 StandardServletMultipartResolver 사용 시 전체 경로가 아니면 파일 복사 시 오류가 발생함
+        String path = "C:/upload/" + current.format(format);    // 외부 폴더로 경로를 지정함
         // 자바의 File 클래스 객체 생성, 위에서 지정한 생성한 경로
         File file = new File(path);
 
