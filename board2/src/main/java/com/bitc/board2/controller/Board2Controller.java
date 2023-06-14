@@ -1,13 +1,10 @@
-package com.bitc.board2.Controller;
+package com.bitc.board2.controller;
 
 import com.bitc.board2.dto.Board2Dto;
-import com.bitc.board2.dto.UserDto;
 import com.bitc.board2.service.Board2Service;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

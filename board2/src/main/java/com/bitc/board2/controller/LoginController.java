@@ -1,4 +1,4 @@
-package com.bitc.board2.Controller;
+package com.bitc.board2.controller;
 
 import com.bitc.board2.dto.UserDto;
 import com.bitc.board2.service.UserService;

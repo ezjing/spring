@@ -1,4 +1,4 @@
-package com.bitc.board2.Configuration;
+package com.bitc.board2.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

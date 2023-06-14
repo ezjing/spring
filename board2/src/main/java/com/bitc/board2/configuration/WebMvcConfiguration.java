@@ -1,4 +1,4 @@
-package com.bitc.board2.Configuration;
+package com.bitc.board2.configuration;
 
 import com.bitc.board2.interceptor.LoginCheck;
 import org.springframework.context.annotation.Configuration;
