@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// @RestController : @Controller + @ResponseBody 로 이루어진 어노테이션
+// @Controller(클래스에 붙음)와 @ResponseBody(메소드 붙음) 를 함께 사용해도 동일한 효과를 가짐
+// ajax 통신 시 rest api 방식으로 데이터를 전송하는 컨트롤러럴 만들어서 사용하면 편리함
+// 리액트 사용 시 프론트엔드 부분과 백엔드 부분이 완전히 분리되어 있기 때문에 데이터를 주고 받기 위해서 ajax 통신이 필요함(이때 api 사용)
+
 @RestController
 @RequestMapping("/board3/api")
 public class BoardApiController {
