@@ -35,6 +35,7 @@ public class PharmacyFullDataBodyDto {
         this.totalCount = totalCount;
     }
 
+    @XmlElement(name = "items")
     public PharmacyFullDataItemsDto getItems() {
         return items;
     }
