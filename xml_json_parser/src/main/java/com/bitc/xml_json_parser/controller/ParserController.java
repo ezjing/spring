@@ -1,8 +1,10 @@
 package com.bitc.xml_json_parser.controller;
 
+import com.bitc.xml_json_parser.dto.DailyBoxOfficeDto;
 import com.bitc.xml_json_parser.dto.PharmacyFullDataItemDto;
 import com.bitc.xml_json_parser.service.ParserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +17,12 @@ public class ParserController {
 
     @Autowired
     private ParserService parserService;
+
+    @Value("${full505.kobis.json.DailyBoxOfficeResultUrl}")
+    private String serviceUrl;
+
+    @Value("${full505.kobis.json.key}")
+    private String serviceKey;
 
     @RequestMapping("/")
     public String index() throws Exception {
@@ -55,5 +63,27 @@ public class ParserController {
         List<PharmacyFullDataItemDto> itemList = parserService.getItemListUrl(serviceUrl + serviceKey + key + opt1 + pageNo + opt2 + numOfRows);
 
         return itemList;
+    }
+
+    // 영화 진흥원 일일 박스오피스 출력 View
+    @GetMapping("/kobis/dailyBoxOffice")
+    public String dailyBoxOfficeView() throws Exception {
+        return "kobis/dailyBoxOffice";
+    }
+
+    // 영화 진흥원 일일 박스오피스 데이터 가져오기
+    @ResponseBody
+    @PostMapping("/kobis/dailyBoxOffice")
+    public Object getDailyBoxOfficeProcess(@RequestParam("targetDt") String targetDt) throws Exception {  // 데이터를 넘길땐 반환타입 Object, @RequestParam html파일에서 받아오는 데이터에 사용
+
+//        String url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=" + targetDt;
+
+        String url = serviceUrl + "?key=" + serviceKey + "&targetDt=" + targetDt;
+
+        List<DailyBoxOfficeDto> dailyBoxOfficeDtoList = parserService.getDailyBoxOfficeList(url);
+
+//        List<DailyBoxOfficeDto> dailyBoxOfficeDtoList = parserService.getDailyBoxOfficeList(serviceUrl + "?key=" + serviceKey + "&targetDt=" + targetDt);   // 이렇게도 작동 됨
+
+        return dailyBoxOfficeDtoList;
     }
 }
