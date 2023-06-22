@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+
+    <style>
+
+    </style>
+    <script>
+        // $(document).ready(function () {
+        //     const a = $("#userName").text(sessionStorage.getItem("userName") + "님 환영합니다."); // jsp때처럼 session값을 직접 들고오진 못하는듯.
+        //     console.log(a);
+        // });
+    </script>
+
+</head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+
+<main class="container-sm">
+    <div>
+        <table class="table table-striped table-hover table-success">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${boardList}">
+                <td th:text="${item.idx}">1</td>
+                <td><a href="/board/boardDetail/idx=" th:attrappend="href=${item.idx}" class="text-decoration-none" th:text="${item.title}">spring</a></td>
+                <td th:text="${item.createId}">봄갱아</td>
+                <td th:text="${item.createDt}">20230621</td>
+                <td th:text="${item.visitCount}">5</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end">
+        <a href="/board/boardWrite" class="btn btn-primary">글쓰기</a>
+    </div>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

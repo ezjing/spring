@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitc.springboard_ljw.mapper.LoginMapper">
+    <select id="loginCheck" parameterType="map" resultType="int">
+        SELECT COUNT(user_id) AS cnt
+        FROM spring_board_login
+        WHERE user_id = #{userId}
+        AND user_pw = #{userPw}
+    </select>
+    <select id="getUser" parameterType="map" resultType="com.bitc.springboard_ljw.dto.LoginDto">
+        SELECT *
+        FROM spring_board_login
+        WHERE user_id = #{userId}
+        AND user_pw = #{userPw}
+    </select>
+    <insert id="joinUser" parameterType="com.bitc.springboard_ljw.dto.LoginDto">
+        INSERT INTO
+        spring_board_login (user_id, user_pw, user_name)
+        VALUES
+        (#{userId}, ${userPw}, #{userName})
+    </insert>
+</mapper>

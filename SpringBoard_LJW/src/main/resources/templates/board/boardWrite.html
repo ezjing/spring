@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+
+    <style>
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#btnCancel").on("click", function () {
+                location.href = "/board/boardList"
+            });
+        });
+    </script>
+
+</head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+<main class="container-sm">
+    <form action="/board/boardWrite" method="post">
+        <div class="row">
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text">제목</span>
+                    <input type="text" class="form-control" name="title">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text">작성자</span>
+                    <input type="text" class="form-control" name="createId">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-floating">
+                <textarea name="contents" id="contents" class="form-control" style="height: 10em"></textarea>
+                <label for="contents" class="ms-3">내용</label>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-danger" id="btnCancel">취소</button>
+            <button type="submit" class="btn btn-primary">등록</button>
+        </div>
+    </form>
+</main>
+<footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>
