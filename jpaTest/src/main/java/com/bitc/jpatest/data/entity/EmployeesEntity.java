@@ -1,29 +1,27 @@
 package com.bitc.jpatest.data.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "employees")  // 프로퍼티가 validate로 설정되어 있다면 테이블과 완벽히 같은 조건이 되어야 하기 때문에 꼭 똑같은 이름으로 지정해 주어야 함
+@Table(name = "jpa_employees")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeesEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int empNo;
+    private long empNo;
 
     @Column(nullable = false)
-    private LocalDate birthDate;    // mySQL 데이터 타입에 주의 DATE -> LocalDate, DATETIME -> LocalDateTime
+    private LocalDate birthDate;
 
     @Column(nullable = false)
     private String firstName;
@@ -32,8 +30,17 @@ public class EmployeesEntity {
     private String lastName;
 
     @Column(nullable = false)
-    private Character gender;   // mySQL 데이터 타입이 처음보는 타입이었음. 오류코드 잘 볼것 Char 타입이라고 나왔으며 Char는 Character이다
+    private char gender;
 
     @Column(nullable = false)
     private LocalDate hireDate;
+
+    // @ToString.Exclude   //양방향 관계 설정 시 ToString을 사용할 경우 상호 참조가 발생함, 상호참조 발생하는 것을 방지하기 위한 옵션
+    @OneToMany(mappedBy = "employees")
+    @ToString.Exclude
+    private List<SalariesEntity> salariesList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "employees")
+    @ToString.Exclude
+    private List<TitlesEntity> titlesList = new ArrayList<>();
 }

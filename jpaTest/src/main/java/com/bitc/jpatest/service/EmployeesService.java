@@ -1,9 +1,20 @@
 package com.bitc.jpatest.service;
 
+import com.bitc.jpatest.data.dto.EmployeesDto;
+import com.bitc.jpatest.data.entity.EmpBaseEntity;
+import com.bitc.jpatest.data.entity.EmployeesEntity;
+
+import java.util.List;
+
 public interface EmployeesService {
-    void finds();
+    EmployeesEntity getEmployeesMemberInfo(int empNo);
 
-    void querySelectAll();
+    List<EmployeesEntity> getEmployeesMemberInfoList(String firstName);
 
-    void querySelectName();
+    // 사원 1명의 정보를 사원 번호로 가져옴
+    EmployeesDto getMemberInfoEmpNo(int empNo);
+    // 사원 정보를 사원 이름을 기반으로 해서 모두 가져옴
+    List<EmployeesDto> getMemberInfoEmpName(String empName);
+
+
 }

@@ -1,41 +1,69 @@
 package com.bitc.jpatest.service;
 
+import com.bitc.jpatest.data.dto.EmployeesDto;
 import com.bitc.jpatest.data.entity.EmployeesEntity;
 import com.bitc.jpatest.data.repository.EmployeesRepository;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-public class EmployeesServiceImpl implements EmployeesService {
-    private final EmployeesRepository employeesRepository;
+public class EmployeesServiceImpl implements EmployeesService{
+    private final EmployeesRepository empRepo;
 
-    public void finds() {
-        System.out.println("\n ----- findsBy() 쿼리 메소드 실행 ----- \n");
-        Optional<EmployeesEntity> prod1 = this.employeesRepository.findByEmpNo(10001);
-        List<EmployeesEntity> prod2 = this.employeesRepository.findAllByGender('M');    // gender는 Char 즉 Character 타입 이기 때문에 작은따옴표''를 사용해야함
-        List<EmployeesEntity> prod3 = this.employeesRepository.queryByGender('G');  // query = findAll 동일 기능
-        System.out.println("\n ----- findsBy() 쿼리 메소드 실행 완료 ----- \n");
+    @Override
+    public EmployeesEntity getEmployeesMemberInfo(int empNo) {
+        Optional<EmployeesEntity> empInfo = empRepo.findByEmpNo(10001);
+
+        if (empInfo.isPresent()) {
+            EmployeesEntity emp = empInfo.get();
+            return emp;
+        }
+        else {
+            return null;
+        }
     }
 
-    public void querySelectAll() {
-        System.out.println("\n ----- @Query 사용, querySelectAll() 실행 ----- \n");
-        List<EmployeesEntity> prod1 = this.employeesRepository.querySelectAll();
-        System.out.println("\n ----- @Query 사용, querySelectAll() 실행 완료 ----- \n");
+    @Override
+    public List<EmployeesEntity> getEmployeesMemberInfoList(String firstName) {
+
+        List<EmployeesEntity> empList = empRepo.findAllByFirstName(firstName);
+
+        return empList;
     }
 
-    public void querySelectName() {
-        System.out.println("\n ----- @Query 사용, querySelectName() 실행 ----- \n");
-        List<EmployeesEntity> prod1 = this.employeesRepository.querySelectFirstName("Akemi");   // 쿼리문 결과가 여러개 나오기 때문에 List로 받아야 하며 하나만 나온다면 EmployeesEntity 타입으로 받아도 된다 
-        String string = "1994-03-31";
-        LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
-        this.employeesRepository.querySelectFirstNameHireDate("Akemi", date);   // LocalDate 타입에 데이터를 넣기위해 파싱과정을 거쳐야함
-        List<EmployeesEntity> prod3 = this.employeesRepository.querySelectFirstNameGender("Akemi", 'M');    // And를 이용하여 결과가 하나만 나와도 첫번째 매개변수에서 결과가 여러개 나오기 때문에 List 타입을 사용해야 함
-        System.out.println("\n ----- @Query 사용, querySelectName() 실행 완료 ----- \n");
+
+    @Override
+    public EmployeesDto getMemberInfoEmpNo(int empNo) {
+        Optional<EmployeesEntity> empInfo = empRepo.findByEmpNo(empNo);
+
+        EmployeesDto member = new EmployeesDto();
+        member.setEmpNo(empInfo.get().getEmpNo());
+        member.setEmpName(empInfo.get().getFirstName() + empInfo.get().getLastName());
+        member.setEmpGender(empInfo.get().getGender());
+
+        return member;
+    }
+
+    @Override
+    public List<EmployeesDto> getMemberInfoEmpName(String empName) {
+        List<EmployeesDto> memberList = new ArrayList<>();
+
+        List<EmployeesEntity> empList = empRepo.findAllByFirstName(empName);
+
+        for (EmployeesEntity item : empList) {
+            EmployeesDto member = new EmployeesDto();
+            member.setEmpNo(item.getEmpNo());
+            member.setEmpName(item.getFirstName() + item.getLastName());
+            member.setEmpGender(item.getGender());
+
+            memberList.add(member);
+        }
+
+        return memberList;
     }
 }
