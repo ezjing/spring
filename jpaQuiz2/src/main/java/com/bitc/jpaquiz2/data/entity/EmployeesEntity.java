@@ -33,12 +33,12 @@ public class EmployeesEntity extends BaseEntity{
     @Column(nullable = false)
     private LocalDate hireDate;
 
-    // (mappedBy = "employees")를 쓰면 자꾸 오류나면서 안되는데 왜그런지 물어보기
-    @OneToOne
-    @ToString.Exclude
-    private SalariesEntity salariesEntity;
-
-    @OneToOne
-    @ToString.Exclude
-    private TitlesEntity titlesEntity;
+    // (mappedBy = "employees")를 쓰면 자꾸 오류나면서 안되는데 왜그런지 물어보기(employees(테이블 명)가 아니고 서브 테이블에서 만든 객체 명(employeesEntity)이 들어와야함)
+//    @OneToOne(mappedBy = "employeesEntity")
+//    @ToString.Exclude
+//    private SalariesEntity salariesEntity;
+//
+//    @OneToOne(mappedBy = "employeesEntity")
+//    @ToString.Exclude
+//    private TitlesEntity titlesEntity;
 }

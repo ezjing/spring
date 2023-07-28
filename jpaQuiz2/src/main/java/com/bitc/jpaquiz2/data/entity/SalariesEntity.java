@@ -19,14 +19,14 @@ public class SalariesEntity {  //  extends BaseEntity 기본 엔티티 상속 �
     private int salary;
 
     @Id
-    @Column(updatable = false)
+    @Column(nullable = false)
     private LocalDate fromDate;
 
-    @Column(updatable = false)
+    @Column(nullable = false)
     private LocalDate toDate;
 
     @Id
-    @OneToOne
+    @OneToOne   // @OneToOne이 아니고 @ManyToOne이 맞음 각각의 테이블에서 emp_no = 10009 으로 검색해보면 샐러리, 타이틀 테이블에서 여러 종류의 값이 출력됨
     @JoinColumn(name = "emp_no")
     @ToString.Exclude
     private EmployeesEntity employeesEntity;
