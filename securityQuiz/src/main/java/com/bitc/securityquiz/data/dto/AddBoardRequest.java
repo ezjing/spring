@@ -2,6 +2,7 @@ package com.bitc.securityquiz.data.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.ErrorResponse;
 
 import java.time.LocalDateTime;
 
@@ -14,4 +15,5 @@ public class AddBoardRequest {
     private String id;
     private LocalDateTime postdate;
     private int visitcount;
+
 }

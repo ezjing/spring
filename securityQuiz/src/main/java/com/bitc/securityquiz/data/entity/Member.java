@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -32,13 +33,17 @@ public class Member implements UserDetails {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, columnDefinition = "integer default 1")
+    @Column(nullable = false, columnDefinition = "integer default 1")   // columnDefinition = "integer default 1"이 안통하는데 물어보기
 //    @ColumnDefault("1")
     private int grade;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime regidate;
+
+    @OneToMany(mappedBy = "member") // mappedBy는 주 테이블의 엔티티파일에 주 테이블의 엔티티 객체를 입력하면 됨
+    @ToString.Exclude
+    private List<Board> boardList = new ArrayList<>();  // @OneToMany 사용했을때
 
     @Builder    // 생성자인데 회원가입할때 들어가야할 항목을 다 넣어야함
     public Member(String id, String pass, String name, LocalDateTime regidate, int grade, String auth) {

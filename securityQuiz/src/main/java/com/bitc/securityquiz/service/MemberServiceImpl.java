@@ -21,7 +21,7 @@ public class MemberServiceImpl implements MemberService{
                 .pass(bCryptPasswordEncoder.encode(dto.getPass()))
                 .name(dto.getName())
                 .regidate(dto.getRegidate())    // 생성날짜 자동입력 + 낫널때문에 필요
-                .grade(dto.getGrade())  // 낫널은 문제없는데 기본값 1때문에 필요
-                .build()).getId();
+                .grade(1)  // 낫널은 문제없는데 기본값 1때문에 필요, columnDefinition = "integer default 1"이 안통하는데 물어보기
+                .build()).getId();  // getId는 왜 있는것이지(리턴 값이다. 나중에쓰려고 가져온거같음)
     }
 }
