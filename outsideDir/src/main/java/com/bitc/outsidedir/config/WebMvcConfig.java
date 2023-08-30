@@ -35,6 +35,8 @@ public class WebMvcConfig  implements WebMvcConfigurer {
         // application.properties 파일 설정값을 사용 방식
         String path1 = "file:///" + imgLocation1;
         String path2 = "file:///" + imgLocation2;
+//        String path1 = "file://" + imgLocation1;
+//        String path2 = "file://" + imgLocation2;
         registry.addResourceHandler("/img2/**").addResourceLocations(path1, path2);
     }
 }
